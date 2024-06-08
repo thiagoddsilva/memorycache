@@ -4,6 +4,7 @@ import io.github.memorycache.MemoryCache
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 internal class MemoryCacheTest {
@@ -92,5 +93,29 @@ internal class MemoryCacheTest {
         val count = cache.getCount()
 
         assertEquals(3, count)
+    }
+
+    @Test
+    fun addAndGet_whenGetExpiredItemFromCache_shouldReturnNull() {
+        val cache = MemoryCache()
+        cache.add("key", "value", CacheOptions(100.milliseconds, null))
+
+        Thread.sleep(110)
+
+        val item = cache.get("key")
+
+        assertEquals(null, item)
+    }
+
+    @Test
+    fun addAndGet_whenGetExpiredItemFromCache_shouldReturnNullAfterItemRemovedByCleanRoutine() {
+        val cache = MemoryCache()
+        cache.add("key", "value", CacheOptions(1.seconds, null))
+
+        Thread.sleep(1100)
+
+        val item = cache.get("key")
+
+        assertEquals(null, item)
     }
 }

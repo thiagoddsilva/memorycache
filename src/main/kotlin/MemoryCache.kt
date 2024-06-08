@@ -1,6 +1,10 @@
 package io.github.memorycache
 
+import java.util.Date
+import java.util.Timer
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.concurrent.schedule
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * MemoryCache class is a simple in-memory cache implementation.
@@ -9,6 +13,24 @@ import java.util.concurrent.ConcurrentHashMap
  */
 class MemoryCache(private val options: CacheOptions? = null) {
     private val cache = ConcurrentHashMap<String, CacheItem>()
+
+    init {
+        // Schedule a task to remove expired items every second.
+        Timer().schedule(Date(), 1.seconds.inWholeMilliseconds) {
+            removeExpiredItems()
+        }
+    }
+
+    /**
+     * Removes expired items from the cache.
+     */
+    private fun removeExpiredItems() {
+        val expiredItems = cache.filter { it.value.isExpired() }
+
+        expiredItems.forEach {
+            cache.remove(it.key)
+        }
+    }
 
     /**
      * Adds a new item to the cache.
@@ -69,6 +91,10 @@ class MemoryCache(private val options: CacheOptions? = null) {
      */
     fun get(key: String): Any? {
         val cacheItem = cache[key] ?: return null
+
+        if (cacheItem.isExpired()) {
+            return null
+        }
 
         cacheItem.updateLastAccessTime()
 
