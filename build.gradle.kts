@@ -3,9 +3,6 @@ plugins {
     id("maven-publish")
 }
 
-group = "io.github.cache"
-version = "1.0-SNAPSHOT"
-
 repositories {
     mavenCentral()
 }

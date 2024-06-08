@@ -1,4 +1,5 @@
 import io.github.memorycache.CacheItem
+import io.github.memorycache.ExpirationMode
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -10,7 +11,7 @@ class CacheItemTest {
 
     @Test
     fun init_whenCalled_shouldReturnNewObjectWithData() {
-        val cacheItem = CacheItem("key", "value", null)
+        val cacheItem = CacheItem("key", "value", null, ExpirationMode.NONE)
 
         assertNotNull(cacheItem)
         assertEquals("key", cacheItem.key)
@@ -19,7 +20,7 @@ class CacheItemTest {
 
     @Test
     fun init_whenCalledWith1SecondDuration_shouldReturnExpiredAfter1Second() {
-        val cacheItem = CacheItem("key", "value", 1.seconds)
+        val cacheItem = CacheItem("key", "value", 1.seconds, ExpirationMode.ABSOLUTE)
 
         Thread.sleep(1100)
 
@@ -28,7 +29,7 @@ class CacheItemTest {
 
     @Test
     fun init_whenCalledWith2SecondDuration_shouldReturnNotExpiredAfter1Second() {
-        val cacheItem = CacheItem("key", "value", 2.seconds)
+        val cacheItem = CacheItem("key", "value", 2.seconds, ExpirationMode.ABSOLUTE)
 
         Thread.sleep(1000)
 
