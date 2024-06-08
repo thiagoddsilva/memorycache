@@ -1,5 +1,3 @@
-Sure, here's a basic `README.md` file for the `memorycache` project:
-
 # MemoryCache
 
 MemoryCache is a simple in-memory cache implementation in Kotlin. It uses a ConcurrentHashMap to store cache items and provides basic cache operations such as adding, retrieving, and removing items.
