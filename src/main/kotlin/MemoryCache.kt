@@ -1,7 +1,9 @@
 package io.github.memorycache
 
+import java.io.Closeable
 import java.util.Date
 import java.util.Timer
+import java.util.TimerTask
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.concurrent.schedule
 import kotlin.time.Duration.Companion.seconds
@@ -11,12 +13,13 @@ import kotlin.time.Duration.Companion.seconds
  * It uses ConcurrentHashMap to store cache items.
  * @property options The options for the cache, can be null.
  */
-class MemoryCache(private val options: CacheOptions? = null) {
+class MemoryCache(private val options: CacheOptions? = null) : Closeable {
     private val cache = ConcurrentHashMap<String, CacheItem>()
+    private var removeExpiredItemsTask: TimerTask
 
     init {
         // Schedule a task to remove expired items every second.
-        Timer().schedule(Date(), 1.seconds.inWholeMilliseconds) {
+        removeExpiredItemsTask = Timer().schedule(Date(), 1.seconds.inWholeMilliseconds) {
             removeExpiredItems()
         }
     }
@@ -118,5 +121,13 @@ class MemoryCache(private val options: CacheOptions? = null) {
      */
     fun getCount() : Int {
         return cache.size
+    }
+
+    /**
+     * Closes the cache and cancels the task to remove expired items.
+     */
+    override fun close() {
+        removeExpiredItemsTask.cancel()
+        cache.clear()
     }
 }
