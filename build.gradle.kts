@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.9.23"
     id("maven-publish")
+    id("signing")
 }
 
 repositories {
@@ -38,4 +39,25 @@ publishing {
             }
         }
     }
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+            pom {
+                name.set("MemoryCache")
+                description.set("A simple in-memory cache implementation.")
+                url.set("https://github.com/thiagoddsilva/memorycache")
+                developers {
+                    developer {
+                        id.set("thiago")
+                        name.set("Thiago Silva")
+                        email.set("thiagodd.silva@gmail.com")
+                    }
+                }
+            }
+        }
+    }
+}
+
+signing {
+    sign(publishing.publications["maven"])
 }
