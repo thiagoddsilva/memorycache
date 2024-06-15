@@ -58,6 +58,19 @@ publishing {
                         email.set("thiagodd.silva@gmail.com")
                     }
                 }
+
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://github.com/thiagoddsilva/memorycache?tab=MIT-1-ov-file")
+                    }
+                }
+
+                scm {
+                    url.set("https://github.com/thiagoddsilva/memorycache")
+                    connection.set("scm:git://github.com/thiagoddsilva/memorycache.git")
+                    developerConnection.set("scm:git://github.com/thiagoddsilva/memorycache.git")
+                }
             }
         }
     }
