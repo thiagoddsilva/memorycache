@@ -1,5 +1,6 @@
-import io.github.memorycache.CacheItem
-import io.github.memorycache.ExpirationMode
+
+import io.github.thiagoddsilva.memorycache.CacheItem
+import io.github.thiagoddsilva.memorycache.ExpirationMode
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

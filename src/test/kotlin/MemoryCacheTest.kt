@@ -1,6 +1,6 @@
-import io.github.memorycache.CacheOptions
-import io.github.memorycache.ExpirationMode
-import io.github.memorycache.MemoryCache
+import io.github.thiagoddsilva.memorycache.CacheOptions
+import io.github.thiagoddsilva.memorycache.ExpirationMode
+import io.github.thiagoddsilva.memorycache.MemoryCache
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull

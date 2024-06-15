@@ -1,4 +1,4 @@
-package io.github.memorycache
+package io.github.thiagoddsilva.memorycache
 
 import java.io.Closeable
 import java.util.Date
