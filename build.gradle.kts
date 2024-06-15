@@ -20,6 +20,11 @@ kotlin {
     jvmToolchain(21)
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 publishing {
     repositories {
         maven {
@@ -59,5 +64,10 @@ publishing {
 }
 
 signing {
+    val signingKey = System.getenv("GPG_SIGNING_KEY")
+    val signingPassword = System.getenv("GPG_SIGNING_PASSPHRASE")
+
+    useInMemoryPgpKeys(signingKey, signingPassword)
+
     sign(publishing.publications["maven"])
 }
